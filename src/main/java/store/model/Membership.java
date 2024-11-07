@@ -1,2 +1,4 @@
-package store.model;public class Membership {
+package store.model;
+
+public class Membership {
 }

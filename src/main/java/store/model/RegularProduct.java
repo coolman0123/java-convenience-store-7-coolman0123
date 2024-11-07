@@ -1,2 +1,4 @@
-package store.model;public class RegularProduct {
+package store.model;
+
+public class RegularProduct {
 }

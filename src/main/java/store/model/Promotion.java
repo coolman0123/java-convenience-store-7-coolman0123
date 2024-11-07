@@ -1,2 +1,4 @@
-package store.model;public class Promotion {
+package store.model;
+
+public class Promotion {
 }

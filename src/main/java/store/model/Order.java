@@ -1,2 +1,4 @@
-package store.model;public class Order {
+package store.model;
+
+public class Order {
 }

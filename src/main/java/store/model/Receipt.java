@@ -1,2 +1,4 @@
-package store.model;public class Receipt {
+package store.model;
+
+public class Receipt {
 }

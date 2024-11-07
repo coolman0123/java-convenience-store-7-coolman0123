@@ -1,2 +1,4 @@
-package store.model;public class Inventory {
+package store.model;
+
+public class Inventory {
 }
