@@ -1,4 +1,4 @@
-package store.util.fileparser;
+package store.model;
 
 public class Product {
     private String name;

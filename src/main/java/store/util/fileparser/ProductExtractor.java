@@ -4,12 +4,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import store.model.Product;
 
 public class ProductExtractor {
 
+    private static List<Product> promoItems = new ArrayList<>();
+    private static List<Product> nonPromoItems = new ArrayList<>();
+
     public static List<Product> extractProductsFromMarkdown(String filePath) {
-        List<Product> promoItems = new ArrayList<>();
-        List<Product> nonPromoItems = new ArrayList<>();
+        promoItems.clear();
+        nonPromoItems.clear();
 
         try {
             List<String> lines = Files.readAllLines(Paths.get(filePath));
@@ -25,9 +29,9 @@ public class ProductExtractor {
                     Product product = new Product(name, price, quantity, promotion);
 
                     if (!promotion.equals("null")) {
-                        promoItems.add(product);  // promotion이 null이 아닌 경우
+                        promoItems.add(product);
                     } else {
-                        nonPromoItems.add(product);  // promotion이 null인 경우
+                        nonPromoItems.add(product);
                     }
                 }
             }
@@ -35,7 +39,14 @@ public class ProductExtractor {
             e.printStackTrace();
         }
 
-        // 결과를 반환하는 메서드
         return new ArrayList<>(promoItems);
+    }
+
+    public static List<Product> getPromoItems() {
+        return promoItems;
+    }
+
+    public static List<Product> getNonPromoItems() {
+        return nonPromoItems;
     }
 }

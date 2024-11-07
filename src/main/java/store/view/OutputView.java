@@ -1,2 +1,4 @@
-package store.view;public class OutputView {
+package store.view;
+
+public class OutputView {
 }
