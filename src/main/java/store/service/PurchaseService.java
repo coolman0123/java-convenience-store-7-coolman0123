@@ -23,7 +23,6 @@ public class PurchaseService {
     public void findpurchase(List<Product> totalItemsList, List<PurchaseProduct> products) {
         for (PurchaseProduct purchaseProduct : products) {
             String productName = purchaseProduct.getName();
-            int extra = purchaseProduct.getExtra();
             int purchaseQuantity = purchaseProduct.getAmount();
             for (Product item : totalItemsList) {
                 if (item.getName().equals(productName)) {
