@@ -33,6 +33,15 @@ public class InputView {
 
     }
 
+    public void requestPurchaseAgain(){
+        System.out.println("감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)");
+    }
+
+    public String inputPurchaseAgain(){
+        String input = Console.readLine();
+        return input;
+    }
+
 
 
 
