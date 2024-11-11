@@ -35,7 +35,7 @@ public class ConvenienceController {
             outputView.printFileContents(totalItemsList);
             inputView.requestPurchase();
 
-            String userInput = inputView.getPurcahseList();
+            String userInput = inputView.getPurchaseList();
             List<PurchaseProduct> purchaseProducts = PurchaseProductParser.parse(userInput);
 
             PurchaseService purchaseService = new PurchaseService(purchaseProducts, promotions);
@@ -47,7 +47,7 @@ public class ConvenienceController {
             List<PurchaseProductDetails> receiptDetails = payment.calculateTotalPay(totalItemsList, purchaseProducts);
 
             inputView.requestMembershipDiscount();
-            String input = inputView.inputMemberShipDiscount();
+            String input = inputView.inputMembershipDiscount();
             MembershipService membershipService = new MembershipService();
             int nonPromoTotal = purchaseService.nonPromoService.nonPromoTotalPayment.getTotalPayment();
             int rpdiscountamount = membershipService.goMembershipDiscount(input, nonPromoTotal);
