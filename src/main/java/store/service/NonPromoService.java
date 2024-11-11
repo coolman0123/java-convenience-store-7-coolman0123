@@ -9,7 +9,6 @@ public class NonPromoService {
 
     public int restPromo(PromotionProduct promotionProduct, int purchasAmount) {
         int nowProductAmount = promotionProduct.getAmount();
-        int price = promotionProduct.getPrice();
 
         if (purchasAmount <= nowProductAmount) {
             promotionProduct.setAmount(nowProductAmount - purchasAmount);
