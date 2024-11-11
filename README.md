@@ -1,6 +1,6 @@
 # java-convenience-store-precourse
 
-# 💵 로또
+# 편의점
 
 사용자가 구입할 물건과 개수를 입력받고, 영수증을 출력한다.
 
@@ -173,4 +173,4 @@
 
 비고
 
-README.md_VER_1.0
+README.md_VER_1.1
