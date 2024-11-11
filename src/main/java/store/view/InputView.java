@@ -23,6 +23,17 @@ public class InputView {
         return userInput;
     }
 
+    public void requestMembershipDiscount(){
+        System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
+    }
+
+    public String inputMemberShipDiscount(){
+        String input = Console.readLine();
+        return input;
+
+    }
+
+
 
 
 
