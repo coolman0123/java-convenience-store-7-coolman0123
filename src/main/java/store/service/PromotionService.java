@@ -1,6 +1,5 @@
 package store.service;
 
-import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.DateTimes;
 import store.model.product.GiftProduct;
 import store.model.product.PromotionProduct;
@@ -47,33 +46,33 @@ public class PromotionService {
         int promoSet = purchaseQuantity / promotionFactor;
         int restQuantity = purchaseQuantity % promotionFactor;
         int productAmount = promotionProduct.getAmount() / promotionFactor;
-        int applicable = Math.min(productAmount, promoSet);
+        int availableDiscounts = Math.min(productAmount, promoSet);
         int originalAmount = promotionProduct.getAmount();
 
 
 
-        if (applicable >= 1) {
-            promotionProduct.setAmount(originalAmount - applicable * promotionFactor);
-            purchaseQuantity -= applicable * promotionFactor;
+        if (availableDiscounts >= 1) {
+            promotionProduct.setAmount(originalAmount - availableDiscounts * promotionFactor);
+            purchaseQuantity -= availableDiscounts * promotionFactor;
         }
         if (restQuantity == promotionProduct.getAmount()) {
-            giftProducts.add(new GiftProduct(promotionProduct.getName(), applicable, promotionProduct.getPrice()));
+            giftProducts.add(new GiftProduct(promotionProduct.getName(), availableDiscounts, promotionProduct.getPrice()));
             return purchaseQuantity;
         }
 
         if (restQuantity == promotionFactor - 1 && promotionProduct.getAmount() >= 1) {
-            applicable = setRestPlus(applicable, promotionProduct.getName(), promotionProduct);
+            availableDiscounts = setRestPlus(availableDiscounts, promotionProduct.getName(), promotionProduct);
             if (promotionProduct.getAmount() < originalAmount) {
                 promotionProduct.setAmount(promotionProduct.getAmount() - promotionFactor + 1);
                 purchaseQuantity = 0;
             }
         }
 
-        giftProducts.add(new GiftProduct(promotionProduct.getName(), applicable, promotionProduct.getPrice()));
+        giftProducts.add(new GiftProduct(promotionProduct.getName(), availableDiscounts, promotionProduct.getPrice()));
         return purchaseQuantity;
     }
 
-    private int setRestPlus(int applicable, String productName, PromotionProduct promotionProduct) {
+    private int setRestPlus(int availableDiscounts, String productName, PromotionProduct promotionProduct) {
         String input = inputView.plusTwoGetUserInput(productName);
         if ("Y".equalsIgnoreCase(input)) {
             promotionProduct.setAmount(promotionProduct.getAmount() - 1);
@@ -81,9 +80,9 @@ public class PromotionService {
             PurchaseService.handleExtra(productName);
 
 
-            return applicable + 1;
+            return availableDiscounts + 1;
         }
-        return applicable;
+        return availableDiscounts;
     }
 
     public List<GiftProduct> getGiftProducts() {
