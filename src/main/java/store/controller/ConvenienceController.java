@@ -20,9 +20,7 @@ public class ConvenienceController {
     public void run() {
         ProductFileReader productFileReader = new ProductFileReader();
         PromotionFileReader promotionFileReader = new PromotionFileReader();
-
-
-
+        
         OutputView outputView = new OutputView();
         InputView inputView = new InputView();
 
@@ -50,9 +48,9 @@ public class ConvenienceController {
             String input = inputView.inputMembershipDiscount();
             MembershipService membershipService = new MembershipService();
             int nonPromoTotal = purchaseService.nonPromoService.nonPromoTotalPayment.getTotalPayment();
-            int rpdiscountamount = membershipService.goMembershipDiscount(input, nonPromoTotal);
+            int membershipDiscount = membershipService.goMembershipDiscount(input, nonPromoTotal);
 
-            int firstPay = Payment.getRealTotal();
+            int totalPay = Payment.getRealTotal();
 
             outputView.printReceipt(receiptDetails);
             outputView.printGift(giftProducts);
@@ -60,10 +58,10 @@ public class ConvenienceController {
 
             int discount = calculateGiftProductDiscount(giftProducts);
             outputView.printGiftProducts(discount);
-            outputView.printRpdisount(rpdiscountamount);
+            outputView.printRpdisount(membershipDiscount);
 
-            int lastprice = firstPay - discount - rpdiscountamount;
-            outputView.printMoneyToPay(lastprice);
+            int discountTotalPay = totalPay - discount - membershipDiscount;
+            outputView.printMoneyToPay(discountTotalPay);
 
             Payment.resetRealTotal();
 
