@@ -50,16 +50,7 @@ public class PromotionService {
         int applicable = Math.min(productAmount, promoSet);
         int originalAmount = promotionProduct.getAmount();
 
-        if(promotionFactor * productAmount < purchaseQuantity){
-            int notPromoAmount = purchaseQuantity -promotionFactor * productAmount;
-            System.out.println("현재 " + promotionProduct.getName() + " " + notPromoAmount  + "은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)");
-            String input = Console.readLine();
-            if (!input.equals("Y")) {
 
-                purchaseQuantity = notPromoAmount;
-            }
-
-        }
 
         if (applicable >= 1) {
             promotionProduct.setAmount(originalAmount - applicable * promotionFactor);
