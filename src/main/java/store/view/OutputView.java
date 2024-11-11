@@ -52,8 +52,8 @@ public class OutputView {
         System.out.printf("행사할인\t\t\t%-10s\t-%,d\n", "", Math.abs(discount));  // 행사할인 출력
     }
 
-    public void printRpdisount(int rp) {
-        System.out.printf("멤버십할인\t\t\t%-7s\t-%,d\n", "", Math.abs(rp));
+    public void printMembershipDiscount(int discount) {
+        System.out.printf("멤버십할인\t\t\t%-7s\t-%,d\n", "", Math.abs(discount));
     }
 
     public void printMoneyToPay(int lastprice) {
