@@ -10,7 +10,6 @@ import store.model.promotion.Promotion;
 import store.service.MembershipService;
 import store.service.PurchaseService;
 import store.util.parser.PurchaseProductParser;
-
 import store.util.reader.ProductFileReader;
 import store.util.reader.PromotionFileReader;
 import store.view.InputView;
@@ -20,7 +19,7 @@ public class ConvenienceController {
     public void run() {
         ProductFileReader productFileReader = new ProductFileReader();
         PromotionFileReader promotionFileReader = new PromotionFileReader();
-        
+
         OutputView outputView = new OutputView();
         InputView inputView = new InputView();
 
@@ -31,15 +30,24 @@ public class ConvenienceController {
         while (continueShopping) {
             inputView.printGreetingMessage();
             outputView.printFileContents(totalItemsList);
-            inputView.requestPurchase();
 
-            String userInput = inputView.getPurchaseList();
-            List<PurchaseProduct> purchaseProducts = PurchaseProductParser.parse(userInput);
+            List<PurchaseProduct> purchaseProducts;
+            while (true) {
+                inputView.requestPurchase();
+                String userInput = inputView.getPurchaseList();
+                purchaseProducts = PurchaseProductParser.parse(userInput);
+
+                if (!validatePurchaseProducts(purchaseProducts, totalItemsList)) {
+                    inputView.productNotExist();
+                    continue;
+                }
+
+                break;
+            }
 
             PurchaseService purchaseService = new PurchaseService(purchaseProducts, promotions);
             purchaseService.findpurchase(totalItemsList, purchaseProducts);
             List<GiftProduct> giftProducts = purchaseService.getGiftProducts();
-
 
             Payment payment = new Payment();
             List<PurchaseProductDetails> receiptDetails = payment.calculateTotalPay(totalItemsList, purchaseProducts);
@@ -58,7 +66,7 @@ public class ConvenienceController {
 
             int discount = calculateGiftProductDiscount(giftProducts);
             outputView.printGiftProducts(discount);
-            outputView.printRpdisount(membershipDiscount);
+            outputView.printMembershipDiscount(membershipDiscount);
 
             int discountTotalPay = totalPay - discount - membershipDiscount;
             outputView.printMoneyToPay(discountTotalPay);
@@ -69,6 +77,17 @@ public class ConvenienceController {
             String againInput = inputView.inputPurchaseAgain();
             continueShopping = againInput.equalsIgnoreCase("Y");
         }
+    }
+
+    private boolean validatePurchaseProducts(List<PurchaseProduct> purchaseProducts, List<Product> totalItemsList) {
+        for (PurchaseProduct purchaseProduct : purchaseProducts) {
+            boolean productExists = totalItemsList.stream()
+                    .anyMatch(product -> product.getName().equalsIgnoreCase(purchaseProduct.getName()));
+            if (!productExists) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private int calculateGiftProductDiscount(List<GiftProduct> giftProducts) {
